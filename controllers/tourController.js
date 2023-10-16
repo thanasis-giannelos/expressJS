@@ -9,13 +9,14 @@ const createTour = async (req, res) => {
       data: newTour,
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ status: 'failed', message: 'could not create tour' });
+    // res
+    //   .status(500)
+    //   .json({ status: 'failed', message: 'could not create tour' });
+    next(Error(`could not create tour`));
   }
 };
 
-const updateTour = async (req, res) => {
+const updateTour = async (req, res, next) => {
   try {
     const tour = await Tour.findByIdAndUpdate(req.params.id, req.body);
     res.status(200).json({
@@ -25,14 +26,15 @@ const updateTour = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({
-      status: 'error',
-      message: `no tour with id: ${id}`,
-    });
+    // res.status(500).json({
+    //   status: 'error',
+    //   message: `no tour with id: ${id}`,
+    // });
+    next(Error(`could not update tour with id: ${req.params.id}`));
   }
 };
 
-const deleteTour = async (req, res) => {
+const deleteTour = async (req, res, next) => {
   try {
     const tour = await Tour.findByIdAndDelete(req.params.id);
     res.status(200).json({
@@ -42,14 +44,15 @@ const deleteTour = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({
-      status: 'error',
-      message: `no tour with id: ${id}`,
-    });
+    // res.status(500).json({
+    //   status: 'error',
+    //   message: `no tour with id: ${id}`,
+    // });
+    next(Error(`could not delete tour with id: ${req.params.id}`));
   }
 };
 
-const getTour = async (req, res) => {
+const getTour = async (req, res, next) => {
   try {
     const tour = await Tour.findOne({ _id: req.params.id });
     res.status(200).json({
@@ -59,14 +62,15 @@ const getTour = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({
-      status: 'error',
-      message: `no tour with id: ${id}`,
-    });
+    // res.status(500).json({
+    //   status: 'error',
+    //   message: `no tour with id: ${req.params.id}`,
+    // });
+    next(Error(`could not get tour with id: ${req.params.id}`));
   }
 };
 
-const getTours = async (req, res) => {
+const getTours = async (req, res, next) => {
   try {
     const tours = await Tour.find();
     res.status(200).json({
@@ -76,10 +80,11 @@ const getTours = async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({
-      status: 'error',
-      message: 'could not get tours',
-    });
+    // res.status(500).json({
+    //   status: 'error',
+    //   message: 'could not get tours',
+    // });
+    next(Error('could not get tours'));
   }
 };
 

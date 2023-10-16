@@ -10,7 +10,6 @@ const DB = process.env.DATABASE.replace(
 );
 
 mongoose
-  .set('debug', true)
   .connect(DB, {
     useNewUrlParser: true,
     useCreateIndex: true,

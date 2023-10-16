@@ -18,5 +18,8 @@ const API_URL = `/api/v${VERSION}`;
 
 app.use(`${API_URL}/tours`, tourRouter);
 app.use(`${API_URL}/users`, userRouter);
-
+app.use('*', (req, res, next) => next(new Error('cannot find this url')));
+app.use((error, req, res, next) =>
+  res.status(400).json({ error: error.message })
+);
 module.exports = app;
